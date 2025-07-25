@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Homepage (Filterable)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Bootstrap Icons CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        /* Custom styles for the loader */
+        #loader.hidden {
+            display: none;
+        }
+        /* Style for the Isotope grid to prevent FOUC (Flash of Unstyled Content) */
+        .grid {
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .grid.images-loaded {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-[#f3f4f6] font-sans text-[#1f2937]">
+
+    <!-- Loading State -->
+    <div id="loader" class="fixed inset-0 bg-white z-[100] flex flex-col justify-center items-center text-center p-6">
+        <div class="spinner border-4 border-t-4 border-gray-200 border-t-blue-600 rounded-full w-12 h-12 animate-spin"></div>
+        <p class="mt-6 text-lg text-gray-700 font-semibold">Fun Fact:</p>
+        <p id="fun-fact" class="mt-2 text-gray-600 max-w-md">Loading a cool fact about me...</p>
+    </div>
+
+    <!-- Reused Responsive Navigation Bar -->
+    <nav class="bg-[#ffffff] shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Your Logo/Name -->
+                <div class="text-xl font-bold text-[#1f2937]">
+                    <a href="#">Your Name</a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#" class="text-[#4b5563] hover:text-[#2563eb]">Home</a>
+                    <a href="#" class="text-[#4b5563] hover:text-[#2563eb]">About</a>
+                    <a href="#" class="text-[#4b5563] hover:text-[#2563eb]">Design Portfolio</a>
+                    <a href="#" class="text-[#4b5563] hover:text-[#2563eb]">Development Portfolio</a>
+                    <a href="#" class="text-[#4b5563] hover:text-[#2563eb]">Side Quest</a>
+                    <a href="#contact" class="bg-[#2563eb] text-[#ffffff] px-4 py-2 rounded-md hover:bg-[#1d4ed8]">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="menu-button" class="text-[#1f2937] focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-4 space-y-2 bg-[#ffffff]">
+            <a href="#" class="block text-[#4b5563] hover:bg-[#f3f4f6] p-2 rounded">Home</a>
+            <a href="#" class="block text-[#4b5563] hover:bg-[#f3f4f6] p-2 rounded">About</a>
+            <a href="#" class="block text-[#4b5563] hover:bg-[#f3f4f6] p-2 rounded">Design Portfolio</a>
+            <a href="#" class="block text-[#4b5563] hover:bg-[#f3f4f6] p-2 rounded">Development Portfolio</a>
+            <a href="#" class="block text-[#4b5563] hover:bg-[#f3f4f6] p-2 rounded">Side Quest</a>
+            <a href="#contact" class="block bg-[#2563eb] text-[#ffffff] text-center px-4 py-2 rounded-md hover:bg-[#1d4ed8]">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <!-- Section Title -->
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold">Creative Direction</h2>
+            <p class="mt-4 max-w-3xl mx-auto text-lg text-[#4b5563]">
+                This is where stories come alive through motion and emotion. Here, I bring kinetic posters, photography, and videography to life—each project a carefully crafted moment meant to spark curiosity and connection.
+            </p>
+        </div>
+        
+        <!-- Portfolio Filters -->
+        <div id="portfolio-filters" class="flex justify-center space-x-2 md:space-x-4 mb-12">
+            <button data-filter="*" class="is-checked px-4 py-2 text-sm md:text-base font-semibold bg-[#2563eb] text-white rounded-md">All</button>
+            <button data-filter=".filter-poster" class="px-4 py-2 text-sm md:text-base font-semibold bg-white text-gray-700 rounded-md hover:bg-gray-200">Poster</button>
+            <button data-filter=".filter-photography" class="px-4 py-2 text-sm md:text-base font-semibold bg-white text-gray-700 rounded-md hover:bg-gray-200">Photography</button>
+            <button data-filter=".filter-videography" class="px-4 py-2 text-sm md:text-base font-semibold bg-white text-gray-700 rounded-md hover:bg-gray-200">Videography</button>
+        </div>
+
+        <!-- Portfolio Grid -->
+        <div class="grid" style="position: relative; height: auto;">
+            <div class="grid-sizer w-full md:w-1/2 lg:w-1/3"></div>
+            <!-- Portfolio Item 1 -->
+            <div class="grid-item w-full md:w-1/2 lg:w-1/3 p-4 element-item filter-poster">
+                <div class="group relative overflow-hidden rounded-lg shadow-lg">
+                    <img src="https://placehold.co/600x400/2d3748/ffffff?text=Poster+1" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Poster Project">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-500 flex flex-col justify-center items-center p-6 text-center text-white opacity-0 group-hover:opacity-100">
+                        <h4 class="text-xl font-bold">Seminar Indaba'25</h4>
+                        <p class="mt-2 text-sm">A kinetic poster designed to feel both energizing and rooted for a youth leadership seminar.</p>
+                        <div class="mt-4 flex space-x-2">
+                            <button title="Read More" class="modal-trigger bg-gray-200 text-gray-800 px-4 py-2 rounded-md text-sm font-semibold hover:bg-gray-300"
+                                data-title="Seminar Indaba'25"
+                                data-description="Created as a digital invitation for a youth leadership seminar hosted by my church, this kinetic poster was designed to feel both energizing and rooted. I wanted to capture the spirit of young people stepping into purpose — grounded in faith, guided by vision. Through bold motion, layered typography, and symbolic imagery, the piece speaks to movement — not just visually, but spiritually. More than an invite, it’s a visual call to rise, lead, and belong, to unlock your potential.">
+                                Read More
+                            </button>
+                            <a href="#" title="More Details" class="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-700">View Project</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Portfolio Item 2 -->
+            <div class="grid-item w-full md:w-1/2 lg:w-1/3 p-4 element-item filter-photography">
+                <div class="group relative overflow-hidden rounded-lg shadow-lg">
+                    <img src="https://placehold.co/600x400/4a5568/ffffff?text=Photo+1" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Photography Project">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-500 flex flex-col justify-center items-center p-6 text-center text-white opacity-0 group-hover:opacity-100">
+                        <h4 class="text-xl font-bold">Urban Portraits</h4>
+                        <p class="mt-2 text-sm">Capturing the soul of the city through the faces of its people.</p>
+                        <div class="mt-4 flex space-x-2">
+                             <button title="Read More" class="modal-trigger bg-gray-200 text-gray-800 px-4 py-2 rounded-md text-sm font-semibold hover:bg-gray-300"
+                                data-title="Urban Portraits"
+                                data-description="This series explores the candid moments and diverse personalities found on city streets. Each photograph aims to tell a story, capturing the un-staged interactions and raw emotions that define urban life. The project focuses on natural light and environmental portraiture to maintain authenticity.">
+                                Read More
+                            </button>
+                            <a href="#" title="More Details" class="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-700">View Page</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Portfolio Item 3 -->
+            <div class="grid-item w-full md:w-1/2 lg:w-1/3 p-4 element-item filter-videography">
+                <div class="group relative overflow-hidden rounded-lg shadow-lg">
+                    <img src="https://placehold.co/600x400/718096/ffffff?text=Video+1" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Videography Project">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-500 flex flex-col justify-center items-center p-6 text-center text-white opacity-0 group-hover:opacity-100">
+                        <h4 class="text-xl font-bold">Ocean's Breath</h4>
+                        <p class="mt-2 text-sm">A short film exploring the calming power of the sea.</p>
+                        <div class="mt-4 flex space-x-2">
+                            <button title="Read More" class="modal-trigger bg-gray-200 text-gray-800 px-4 py-2 rounded-md text-sm font-semibold hover:bg-gray-300"
+                                data-title="Ocean's Breath"
+                                data-description="This short film is a visual meditation on the rhythm of the ocean. Using slow-motion footage and an atmospheric soundscape, it invites the viewer to experience the tranquil and powerful nature of the waves. The project was filmed over several dawn sessions to capture the soft, ethereal light of early morning.">
+                                Read More
+                            </button>
+                            <a href="#" title="More Details" class="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-700">View Page</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Reused Footer -->
+    <footer id="contact" class="bg-[#1f2937] text-[#ffffff] pt-10 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-wrap justify-center items-center text-center gap-y-4 md:gap-x-8">
+                <div class="flex items-center gap-x-3">
+                    <i class="bi bi-envelope text-xl text-[#60a5fa]"></i>
+                    <a href="mailto:your.email@example.com" class="hover:text-[#60a5fa]">your.email@example.com</a>
+                </div>
+                <div class="flex items-center gap-x-3">
+                     <i class="bi bi-telephone text-xl text-[#60a5fa]"></i>
+                     <span class="text-[#d1d5db]">(+27) 12 345 6789</span>
+                </div>
+            </div>
+            <div class="flex justify-center mt-8 gap-x-6">
+                <a href="#" aria-label="LinkedIn" class="text-2xl text-[#9ca3af] hover:text-[#ffffff]"><i class="bi bi-linkedin"></i></a>
+                <a href="#" aria-label="GitHub" class="text-2xl text-[#9ca3af] hover:text-[#ffffff]"><i class="bi bi-github"></i></a>
+                <a href="#" aria-label="WhatsApp" class="text-2xl text-[#9ca3af] hover:text-[#ffffff]"><i class="bi bi-whatsapp"></i></a>
+                <a href="#" aria-label="Instagram" class="text-2xl text-[#9ca3af] hover:text-[#ffffff]"><i class="bi bi-instagram"></i></a>
+            </div>
+            <div class="text-center text-[#6b7280] mt-8 border-t border-[#374151] pt-6">
+                <p>&copy; 2025 Your Name. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Project Details Modal -->
+    <div id="project-modal" class="fixed inset-0 z-[110] flex items-center justify-center p-4 transition-all duration-300 ease-in-out opacity-0 pointer-events-none">
+        <!-- Backdrop -->
+        <div id="modal-backdrop" class="absolute inset-0 bg-black bg-opacity-60"></div>
+        <!-- Modal Content -->
+        <div id="modal-content" class="bg-white rounded-lg shadow-2xl max-w-2xl w-full p-8 relative transform transition-all duration-300 ease-in-out scale-95">
+            <button id="modal-close-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 z-10">
+                <i class="bi bi-x-lg text-2xl"></i>
+            </button>
+            <h3 id="modal-title" class="text-3xl font-bold mb-4 text-gray-800"></h3>
+            <div id="modal-description" class="text-gray-700 leading-relaxed max-h-[60vh] overflow-y-auto pr-4 space-y-4">
+            </div>
+        </div>
+    </div>
+
+    <!-- Isotope and imagesLoaded JS -->
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Fun Facts Loading Script ---
+            const funFacts = [
+                "I've never been to Cape Town.",
+                "I speak three languages fluently.",
+                "My first computer was a Commodore 64.",
+                "I believe pineapple belongs on pizza.",
+                "I can solve a Rubik's Cube in under two minutes."
+            ];
+            const funFactElement = document.getElementById('fun-fact');
+            funFactElement.textContent = funFacts[Math.floor(Math.random() * funFacts.length)];
+            
+            const loader = document.getElementById('loader');
+
+            // --- Mobile Menu Script ---
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // --- Isotope Filter Script with imagesLoaded ---
+            var grid = document.querySelector('.grid');
+            var iso;
+            imagesLoaded(grid, function() {
+                iso = new Isotope(grid, {
+                    itemSelector: '.grid-item',
+                    layoutMode: 'masonry',
+                    percentPosition: true,
+                    masonry: {
+                        columnWidth: '.grid-sizer'
+                    }
+                });
+                loader.classList.add('hidden');
+                grid.classList.add('images-loaded');
+            });
+
+            var filterButtonGroup = document.querySelector('#portfolio-filters');
+            filterButtonGroup.addEventListener('click', function(event) {
+                if (!event.target.matches('button')) return;
+                var filterValue = event.target.getAttribute('data-filter');
+                iso.arrange({ filter: filterValue });
+                var buttons = filterButtonGroup.querySelectorAll('button');
+                buttons.forEach(button => button.classList.remove('is-checked', 'bg-[#2563eb]', 'text-white'));
+                event.target.classList.add('is-checked', 'bg-[#2563eb]', 'text-white');
+            });
+
+            // --- Modal Script ---
+            const modal = document.getElementById('project-modal');
+            const modalContent = document.getElementById('modal-content');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDescription = document.getElementById('modal-description');
+            const closeModalBtn = document.getElementById('modal-close-btn');
+            const modalTriggers = document.querySelectorAll('.modal-trigger');
+            const modalBackdrop = document.getElementById('modal-backdrop');
+
+            function openModal() {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modalContent.classList.remove('scale-95');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            }
+
+            function closeModal() {
+                modal.classList.add('opacity-0');
+                modalContent.classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('pointer-events-none');
+                    document.body.style.overflow = 'auto'; // Restore scrolling
+                }, 300);
+            }
+
+            modalTriggers.forEach(trigger => {
+                trigger.addEventListener('click', function() {
+                    const title = this.getAttribute('data-title');
+                    const description = this.getAttribute('data-description');
+                    modalTitle.textContent = title;
+                    // Split description by newlines and wrap each part in a <p> tag for proper spacing
+                    modalDescription.innerHTML = description.split('\n').map(p => `<p>${p}</p>`).join('');
+                    openModal();
+                });
+            });
+
+            closeModalBtn.addEventListener('click', closeModal);
+            modalBackdrop.addEventListener('click', closeModal);
+
+            document.addEventListener('keydown', event => {
+                if (event.key === 'Escape' && !modal.classList.contains('pointer-events-none')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

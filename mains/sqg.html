@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Side Quests</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+       body {
+            font-family: 'Hind', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #efefe9;
+            color: #11100f;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top */
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 960px; /* md:max-w-screen-md, lg:max-w-screen-lg */
+            margin: 0 auto;
+            background-color: #efefe9;
+            padding: 32px; /* p-8 */
+            border-radius: 12px; /* rounded-xl */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-xl */
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700; /* font-bold */
+            color: #be001c; 
+            margin-bottom: 16px; /* mb-4 */
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.75rem; /* text-3xl */
+            font-weight: 700;
+            color: #be001c; /* Indigo-600 */
+            margin-top: 24px; /* mt-6 */
+            margin-bottom: 16px; /* mb-4 */
+            border-bottom: 2px solid #efefe9; /* border-b-2 border-blue-100 */
+            padding-bottom: 8px; /* pb-2 */
+        }
+
+        h3 {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 700;
+            color: #11100f; 
+            margin-bottom: 12px; /* mb-3 */
+        }
+
+        p {
+            margin-bottom: 16px; /* mb-4 */
+            line-height: 1.6;
+        }
+
+        .auth-section, .game-section, .leaderboard-section {
+            padding: 24px; /* p-6 */
+            background-color: #efefe9; /* Gray-100 */
+            border-radius: 8px; /* rounded-lg */
+            margin-bottom: 24px; /* mb-6 */
+        }
+
+        #auth-status {
+            font-weight: 700; /* font-bold */
+            color: #2f855a; /* Green-700 */
+        }
+        .auth-buttons button,
+        .auth-form button,
+        .game-controls button,
+        .modal-footer button,
+        .leaderboard-tab-btn { /* Unified button styles */
+            padding: 10px 20px; /* px-5 py-2.5 */
+            margin-right: 12px; /* mr-3 */
+            margin-bottom: 12px; /* mb-3 */
+            border: none;
+            border-radius: 8px; /* rounded-lg */
+            cursor: pointer;
+            font-weight: 600; /* font-semibold */
+            transition: background-color 0.2s, transform 0.1s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+        }
+        .auth-buttons button {
+            background-color: #be001c; /* Indigo-700 */
+            color: #efefe9;
+        }
+        .auth-buttons button:hover {
+            background-color: #9c0017; /* Darker Indigo */
+            transform: translateY(-2px);
+        }
+        .auth-buttons button:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+        .auth-buttons button#signOutBtn {
+            background-color: #e53e3e; /* Red-600 */
+        }
+        .auth-buttons button#signOutBtn:hover {
+            background-color: #c53030; /* Darker Red */
+        }
+
+        .auth-form input[type="email"],
+        .auth-form input[type="password"] {
+            width: 100%;
+            padding: 10px; /* p-2.5 */
+            margin-bottom: 12px; /* mb-3 */
+            border: 1px solid #cbd5e0; /* Gray-300 */
+            border-radius: 8px; /* rounded-lg */
+            box-sizing: border-box; /* important for width */
+        }
+        .auth-form button {
+            background-color: #be001c; 
+            color: #efefe9;
+        }
+        .auth-form button:hover {
+            background-color: #9c0017; /* Darker Teal */
+        }
+        .auth-form button#hideEmailAuthBtn {
+            background-color: #11100f; 
+            color: #efefe9
+        }
+        .auth-form button#hideEmailAuthBtn:hover {
+            background-color: #efefe9;
+            color: #be001c;
+        }
+
+        .error-message {
+            color: #e53e3e; /* Red-600 */
+            font-weight: 600;
+            margin-top: 8px; /* mt-2 */
+        }
+
+        /* Game Card specific styles for selection view */
+        .game-card {
+            background-color: #efefe9;
+            border: 1px solid #eef; /* Gray-200 */
+            padding: 24px; /* p-6 */
+            margin-bottom: 24px; /* mb-6 */
+            border-radius: 8px; /* rounded-lg */
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow-sm */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center game elements */
+            cursor: pointer; /* Indicate it's clickable */
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+        }
+        .game-card h3 {
+            margin-top: 0;
+            text-align: center;
+        }
+        .game-card p {
+            text-align: center;
+        }
+        .game-card .game-preview-icon {
+            font-size: 4rem; /* Large icon */
+            margin-bottom: 15px;
+        }
+
+        /* Game Play Area styles */
+        #gamePlayArea {
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            align-items: center;
+            padding: 24px;
+            background-color: #efefe9;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+        #gamePlayArea h2 {
+            text-align: center;
+            width: 100%;
+        }
+        .game-play-canvas-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .game-canvas { /* Shared style for all game canvases */
+            background-color: #78a7ff; /* Sky blue */
+            display: block;
+            border: 2px solid #a0aec0; /* Gray-400 */
+            border-radius: 8px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 100%; /* Make canvas responsive */
+            max-width: 600px; /* Max width for larger screens */
+            height: 400px;
+        }
+
+        .game-controls button {
+            background-color: #48bb78; /* Green-500 */
+            color: white;
+            margin-top: 15px;
+        }
+        .game-controls button:hover {
+            background-color: #38a169; /* Darker Green */
+        }
+        .game-controls button.back-button {
+            background-color: #a0aec0; /* Gray-400 */
+        }
+        .game-controls button.back-button:hover {
+            background-color: #718096; /* Gray-500 */
+        }
+
+        .leaderboard-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .leaderboard-section li {
+            padding: 10px 0; /* py-2.5 */
+            border-bottom: 1px solid #ebf4ff; /* border-b border-blue-100 */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1rem;
+        }
+        .leaderboard-section li:last-child {
+            border-bottom: none;
+        }
+        .leaderboard-section li span:first-child {
+            font-weight: 600;
+        }
+        .leaderboard-section li span:last-child {
+            color: #4c51bf; /* Indigo-700 */
+            font-weight: 700;
+        }
+
+        /* Leaderboard Tabs */
+        .leaderboard-tab-btn {
+            background-color: #cbd5e0; /* Gray-300 */
+            color: #2d3748; /* Gray-800 */
+            margin-right: 8px;
+            margin-bottom: 8px; /* For stacking on small screens */
+            box-shadow: none; /* Override general button shadow */
+        }
+        .leaderboard-tab-btn.active {
+            background-color: #be001c;
+            color: #efefe9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .leaderboard-tab-btn:hover {
+            background-color: #be001c;
+            color: #efefe9;
+            transform: translateY(-1px);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background-color: #efefe9;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+        }
+        .modal-content h3 {
+            margin-top: 0;
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #718096; /* Gray-500 */
+        }
+        .modal-close-btn:hover {
+            color: #2d3748; /* Gray-800 */
+        }
+        .modal-body {
+            margin-top: 20px;
+        }
+        .modal-footer {
+            margin-top: 20px;
+            text-align: right;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.75rem; /* text-3xl */
+            }
+            h2 {
+                font-size: 1.5rem; /* text-2xl */
+            }
+            .auth-buttons button,
+            .auth-form button,
+            .game-controls button,
+            .leaderboard-tab-btn,
+            .modal-footer button { /* Apply full width on small screens */
+                width: calc(100% - 24px);
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            .game-canvas {
+                width: 100%;
+                height: 300px; /* Adjust height for mobile */
+            }
+            .modal-content {
+                padding: 20px;
+            }
+            .modal-close-btn {
+                top: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Side Quests</h1>
+        <p>Welcome to my collection of mini-games! Set a high score and see if you can make it to the leaderboard.</p>
+
+        <div class="auth-section">
+            <h2>Authentication</h2>
+            <p>Status: <span id="auth-status">Loading...</span></p>
+            <div id="auth-buttons" class="auth-buttons">
+                <button id="signInAnonBtn">Play Anonymously</button>
+                <button id="googleSignInBtn">Sign in with Google</button>
+                <button id="showEmailAuthBtn">Sign in with Email</button>
+                <button id="signOutBtn" style="display: none;">Sign Out</button>
+            </div>
+
+            <div id="emailAuthForm" style="display: none;" class="auth-form">
+                <h3>Email Authentication</h3>
+                <label for="emailInput">Email:</label>
+                <input type="email" id="emailInput">
+                <label for="passwordInput">Password:</label>
+                <input type="password" id="passwordInput">
+                <button id="signUpEmailBtn">Sign Up</button>
+                <button id="signInEmailBtn">Sign In</button>
+                <p class="error-message" id="authError"></p>
+                <button id="hideEmailAuthBtn">Back to Auth Options</button>
+            </div>
+        </div>
+
+        <!-- Game Selection Area -->
+        <div id="gameSelectionArea">
+            <h2>Games</h2>
+            <!-- Game 1: Flappy Bird Clone -->
+            <div class="game-card" data-game-id="flappyBird">
+                <span class="game-preview-icon">🐦</span>
+                <h3>Flappy Bird Clone</h3>
+                <p>Click or tap to make the bird fly! Navigate through the pipes and try to get the highest score.</p>
+                <div class="game-controls">
+                    <button class="play-game-btn">Play Game</button>
+                </div>
+            </div>
+
+            <!-- Game 2: Snake (Placeholder) -->
+            <div class="game-card" data-game-id="snakeGame">
+                <span class="game-preview-icon">🐍</span>
+                <h3>Snake Game</h3>
+                <p>Guide the snake to eat the apples and grow longer. Avoid hitting walls or yourself!</p>
+                <div class="game-controls">
+                    <button class="play-game-btn">Play Game</button>
+                </div>
+            </div>
+
+            <!-- Game 3: Breakout / Brick Breaker (Placeholder) -->
+            <div class="game-card" data-game-id="breakoutGame">
+                <span class="game-preview-icon">🧱</span>
+                <h3>Breakout</h3>
+                <p>Break all the bricks by bouncing the ball off your paddle. Don't let the ball fall!</p>
+                <div class="game-controls">
+                    <button class="play-game-btn">Play Game</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dedicated Game Play Area (initially hidden) -->
+        <div id="gamePlayArea" style="display: none;">
+            <h2 id="currentGameTitle"></h2>
+            <div class="game-play-canvas-container">
+                <!-- Flappy Bird Canvas (will be shown/hidden) -->
+                <canvas id="flappyBirdCanvas" class="game-canvas" width="600" height="400" style="display: none;"></canvas>
+                <!-- Other game canvases will go here, also initially hidden -->
+                <canvas id="snakeGameCanvas" class="game-canvas" width="600" height="400" style="display: none;"></canvas>
+                <canvas id="breakoutGameCanvas" class="game-canvas" width="600" height="400" style="display: none;"></canvas>
+            </div>
+            <div class="game-controls">
+                <button id="startGameBtn">Start Game</button>
+                <button class="back-button" onclick="showGameSelection()">Back to Games</button>
+            </div>
+        </div>
+
+
+        <div class="leaderboard-section">
+            <h2>Leaderboards</h2>
+            <!-- Tabs for different games' leaderboards -->
+            <div id="leaderboardTabs" style="margin-bottom: 15px; text-align: center;">
+                <button class="leaderboard-tab-btn active" data-game-id="flappyBird">Flappy Bird</button>
+                <button class="leaderboard-tab-btn" data-game-id="snakeGame">Snake</button>
+                <button class="leaderboard-tab-btn" data-game-id="breakoutGame">Breakout</button>
+            </div>
+
+            <div id="globalLeaderboardContainer">
+                <h3>Global Leaderboard (<span id="currentLeaderboardGameName">Flappy Bird</span>) - Top 5</h3>
+                <ul id="global-leaderboard">
+                    <li>Loading global leaderboard...</li>
+                </ul>
+                <div style="text-align: center; margin-top: 15px;">
+                    <button class="auth-buttons" onclick="openFullLeaderboardModal()">View Full Leaderboard</button>
+                </div>
+            </div>
+
+            <!-- Personal Bests are now primarily in the modal for full view -->
+            <!-- But a placeholder or quick summary might still be useful here if space allows -->
+        </div>
+    </div>
+
+    <!-- Full Leaderboard Modal (initially hidden) -->
+    <div id="fullLeaderboardModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <button class="modal-close-btn" onclick="closeFullLeaderboardModal()">×</button>
+            <h2>All Leaderboards</h2>
+            <div class="modal-body">
+                <div id="modalLeaderboardTabs" style="margin-bottom: 15px; text-align: center;">
+                    <button class="leaderboard-tab-btn active" data-game-id="flappyBird">Flappy Bird</button>
+                    <button class="leaderboard-tab-btn" data-game-id="snakeGame">Snake</button>
+                    <button class="leaderboard-tab-btn" data-game-id="breakoutGame">Breakout</button>
+                </div>
+
+                <h3>Global Leaderboard (<span id="modalCurrentLeaderboardGameName">Flappy Bird</span>)</h3>
+                <ul id="modal-global-leaderboard">
+                    <li>Loading full global leaderboard...</li>
+                </ul>
+
+                <h3 style="margin-top: 25px;">Your Personal Bests</h3>
+                <ul id="modal-personal-bests">
+                    <li>Sign in to see your personal bests.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeFullLeaderboardModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs - Using compat versions for simpler integration -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration - REPLACE WITH YOUR ACTUAL CONFIG
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY", // Replace with your actual API Key
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com", // Replace with your actual Auth Domain
+            projectId: "YOUR_PROJECT_ID", // Replace with your actual Project ID
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            // measurementId: "YOUR_MEASUREMENT_ID" // Uncomment if you enabled Analytics
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // --- UI Element References ---
+        const authStatusSpan = document.getElementById('auth-status');
+        const authButtonsDiv = document.getElementById('auth-buttons');
+        const emailAuthFormDiv = document.getElementById('emailAuthForm');
+        const showEmailAuthBtn = document.getElementById('showEmailAuthBtn');
+        const hideEmailAuthBtn = document.getElementById('hideEmailAuthBtn');
+        const signInAnonBtn = document.getElementById('signInAnonBtn');
+        const googleSignInBtn = document.getElementById('googleSignInBtn');
+        const signOutBtn = document.getElementById('signOutBtn');
+        const emailInput = document.getElementById('emailInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const signUpEmailBtn = document.getElementById('signUpEmailBtn');
+        const signInEmailBtn = document.getElementById('signInEmailBtn');
+        const authErrorSpan = document.getElementById('authError');
+
+        const gameSelectionArea = document.getElementById('gameSelectionArea');
+        const gamePlayArea = document.getElementById('gamePlayArea');
+        const currentGameTitle = document.getElementById('currentGameTitle');
+        const startGameButton = document.getElementById('startGameBtn'); // Unified start button for active game
+
+        const globalLeaderboardList = document.getElementById('global-leaderboard');
+        const currentLeaderboardGameNameSpan = document.getElementById('currentLeaderboardGameName');
+        const leaderboardTabsContainer = document.getElementById('leaderboardTabs');
+
+        const fullLeaderboardModal = document.getElementById('fullLeaderboardModal');
+        const modalLeaderboardTabsContainer = document.getElementById('modalLeaderboardTabs');
+        const modalGlobalLeaderboardList = document.getElementById('modal-global-leaderboard');
+        const modalCurrentLeaderboardGameNameSpan = document.getElementById('modalCurrentLeaderboardGameName');
+        const modalPersonalBestsList = document.getElementById('modal-personal-bests');
+
+        // --- Game and Leaderboard State ---
+        const gameIds = {
+            'flappyBird': 'Flappy Bird',
+            'snakeGame': 'Snake Game',
+            'breakoutGame': 'Breakout'
+        };
+        let activeLeaderboardGameId = 'flappyBird'; // Default active leaderboard tab on main page
+        let activeModalLeaderboardGameId = 'flappyBird'; // Default active leaderboard tab in modal
+        let activeGameBeingPlayed = null; // Stores the ID of the game currently being played
+
+
+        // --- Authentication Logic ---
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                authStatusSpan.textContent = `Signed in as: ${user.isAnonymous ? 'Anonymous' : (user.email || user.displayName || user.uid)}`;
+                authButtonsDiv.style.display = 'block';
+                signOutBtn.style.display = 'inline-block';
+                signInAnonBtn.style.display = 'none';
+                googleSignInBtn.style.display = 'none';
+                showEmailAuthBtn.style.display = 'none';
+                emailAuthFormDiv.style.display = 'none';
+                authErrorSpan.textContent = '';
+                // No longer fetching personal bests directly here, they are in the modal
+            } else {
+                authStatusSpan.textContent = 'Signed out.';
+                authButtonsDiv.style.display = 'block';
+                signOutBtn.style.display = 'none';
+                signInAnonBtn.style.display = 'inline-block';
+                googleSignInBtn.style.display = 'inline-block';
+                showEmailAuthBtn.style.display = 'inline-block';
+                emailAuthFormDiv.style.display = 'none';
+                // Also clear personal bests in modal if it's open
+                modalPersonalBestsList.innerHTML = '<li>Sign in to see your personal bests.</li>';
+            }
+            // Always refresh the currently active leaderboard on main page
+            fetchGlobalLeaderboard(activeLeaderboardGameId, globalLeaderboardList, currentLeaderboardGameNameSpan, 5);
+        });
+
+        signInAnonBtn.addEventListener('click', () => {
+            auth.signInAnonymously()
+                .catch((error) => {
+                    console.error("Anonymous sign-in error:", error);
+                    authErrorSpan.textContent = `Error: ${error.message}`;
+                });
+        });
+
+        googleSignInBtn.addEventListener('click', () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .catch((error) => {
+                    console.error("Google sign-in error:", error);
+                    authErrorSpan.textContent = `Error: ${error.message}`;
+                });
+        });
+
+        showEmailAuthBtn.addEventListener('click', () => {
+            authButtonsDiv.style.display = 'none';
+            emailAuthFormDiv.style.display = 'block';
+            authErrorSpan.textContent = '';
+        });
+
+        hideEmailAuthBtn.addEventListener('click', () => {
+            emailAuthFormDiv.style.display = 'none';
+            authButtonsDiv.style.display = 'block';
+            authErrorSpan.textContent = '';
+        });
+
+        signUpEmailBtn.addEventListener('click', () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log("Signed up with email:", userCredential.user);
+                    authErrorSpan.textContent = '';
+                })
+                .catch((error) => {
+                    console.error("Email sign-up error:", error);
+                    authErrorSpan.textContent = `Error: ${error.message}`;
+                });
+        });
+
+        signInEmailBtn.addEventListener('click', () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log("Signed in with email:", userCredential.user);
+                    authErrorSpan.textContent = '';
+                })
+                .catch((error) => {
+                    console.error("Email sign-in error:", error);
+                    authErrorSpan.textContent = `Error: ${error.message}`;
+                });
+        });
+
+        signOutBtn.addEventListener('click', () => {
+            auth.signOut()
+                .then(() => {
+                    console.log("User signed out.");
+                })
+                .catch((error) => {
+                    console.error("Sign-out error:", error);
+                });
+        });
+
+        // --- UI Navigation (Game Selection vs. Game Play) ---
+        function showGameSelection() {
+            gameSelectionArea.style.display = 'block';
+            gamePlayArea.style.display = 'none';
+            // Also stop any running game
+            if (activeGameBeingPlayed === 'flappyBird' && flappyBirdGameRunning) {
+                endGame('flappyBird', true); // Pass true to avoid re-submitting score
+            }
+            activeGameBeingPlayed = null;
+            // Ensure initial welcome screen for flappy bird is drawn if returning
+            drawWelcomeScreen('flappyBirdCanvas');
+        }
+
+        function showGamePlayArea(gameId) {
+            gameSelectionArea.style.display = 'none';
+            gamePlayArea.style.display = 'flex'; // Use flex to center content
+            currentGameTitle.textContent = gameIds[gameId];
+            activeGameBeingPlayed = gameId;
+
+            // Hide all canvases first
+            document.querySelectorAll('.game-canvas').forEach(canvasEl => {
+                canvasEl.style.display = 'none';
+            });
+
+            // Show the canvas for the selected game
+            const targetCanvas = document.getElementById(gameId + 'Canvas');
+            if (targetCanvas) {
+                targetCanvas.style.display = 'block';
+                // Reset and draw welcome screen for the specific game
+                if (gameId === 'flappyBird') {
+                    drawWelcomeScreen('flappyBirdCanvas');
+                } else {
+                    drawGamePlaceholderWelcome(targetCanvas, gameIds[gameId]);
+                }
+            }
+
+            // Bind start button to the correct game
+            startGameButton.onclick = () => {
+                if (gameId === 'flappyBird') {
+                    startGameFlappyBird();
+                } else {
+                    startGamePlaceholder(gameId);
+                }
+            };
+        }
+
+        function drawGamePlaceholderWelcome(canvasElement, gameName) {
+            const tempCtx = canvasElement.getContext('2d');
+            tempCtx.fillStyle = '#334155';
+            tempCtx.fillRect(0, 0, canvasElement.width, canvasElement.height);
+            tempCtx.fillStyle = 'white';
+            tempCtx.font = '30px Inter';
+            tempCtx.textAlign = 'center';
+            tempCtx.fillText(gameName, canvasElement.width / 2, canvas.height / 2 - 30);
+            tempCtx.font = '18px Inter';
+            tempCtx.fillText('Click "Start Game" to begin!', canvasElement.width / 2, canvas.height / 2 + 10);
+            tempCtx.font = '14px Inter';
+            tempCtx.fillText('(Game logic not yet implemented)', canvasElement.width / 2, canvas.height / 2 + 40);
+        }
+
+        // Event listeners for game cards to show game play area
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const gameId = this.dataset.gameId;
+                showGamePlayArea(gameId);
+            });
+        });
+
+        // --- Leaderboard Modal Logic ---
+        function openFullLeaderboardModal() {
+            fullLeaderboardModal.style.display = 'flex'; // Use flex for centering
+            // Ensure modal tabs reflect the initial main page tab
+            document.querySelectorAll('#modalLeaderboardTabs .leaderboard-tab-btn').forEach(btn => {
+                if (btn.dataset.gameId === activeLeaderboardGameId) {
+                    btn.classList.add('active');
+                    activeModalLeaderboardGameId = activeLeaderboardGameId; // Sync active tab
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            fetchGlobalLeaderboard(activeModalLeaderboardGameId, modalGlobalLeaderboardList, modalCurrentLeaderboardGameNameSpan); // Fetch full global leaderboard (no limit)
+            const user = auth.currentUser;
+            if (user) {
+                fetchPersonalBests(user.uid, modalPersonalBestsList);
+            } else {
+                modalPersonalBestsList.innerHTML = '<li>Sign in to see your personal bests.</li>';
+            }
+        }
+
+        function closeFullLeaderboardModal() {
+            fullLeaderboardModal.style.display = 'none';
+        }
+
+        // Event listeners for modal leaderboard tabs
+        modalLeaderboardTabsContainer.querySelectorAll('.leaderboard-tab-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('#modalLeaderboardTabs .leaderboard-tab-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                activeModalLeaderboardGameId = this.dataset.gameId;
+                fetchGlobalLeaderboard(activeModalLeaderboardGameId, modalGlobalLeaderboardList, modalCurrentLeaderboardGameNameSpan);
+            });
+        });
+
+
+        // --- Firestore Logic for Leaderboards ---
+
+        // Function to submit a score
+        async function submitScore(gameId, score) {
+            const user = auth.currentUser;
+            if (!user) {
+                showMessageBox("Please sign in or play anonymously to submit a score!");
+                return;
+            }
+
+            const username = user.isAnonymous ? "Anonymous Player" : (user.displayName || user.email || "Unknown Player");
+            const userId = user.uid;
+            const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+
+            try {
+                // Add to global leaderboard
+                await db.collection('leaderboards').doc(gameId).collection('scores').add({
+                    userId: userId,
+                    username: username,
+                    score: score,
+                    timestamp: timestamp
+                });
+                console.log(`Score ${score} submitted for ${gameId} by ${username}`);
+
+                // Update personal best
+                const personalBestRef = db.collection('users').doc(userId).collection('personalBests').doc(gameId);
+                const personalBestDoc = await personalBestRef.get();
+
+                if (!personalBestDoc.exists || score > personalBestDoc.data().score) {
+                    await personalBestRef.set({
+                        score: score,
+                        timestamp: timestamp,
+                        username: username // Store username in personal bests too for consistency
+                    });
+                    console.log(`Personal best updated for ${gameId} by ${username}`);
+                }
+
+                showMessageBox(`Score ${score} submitted for ${gameIds[gameId]}!`);
+                // Refresh main and modal leaderboards
+                fetchGlobalLeaderboard(activeLeaderboardGameId, globalLeaderboardList, currentLeaderboardGameNameSpan, 5);
+                fetchGlobalLeaderboard(activeModalLeaderboardGameId, modalGlobalLeaderboardList, modalCurrentLeaderboardGameNameSpan);
+                fetchPersonalBests(userId, modalPersonalBestsList);
+
+            } catch (error) {
+                console.error("Error submitting score:", error);
+                showMessageBox("Error submitting score: " + error.message);
+            }
+        }
+
+        // Function to fetch and display global leaderboard for a specific game
+        async function fetchGlobalLeaderboard(gameId, targetListElement, targetNameSpanElement, limit = 10) { // Default limit to 10 for full view
+            targetListElement.innerHTML = '<li>Loading global leaderboard...</li>';
+            targetNameSpanElement.textContent = gameIds[gameId] || 'Unknown Game';
+
+            try {
+                const querySnapshot = await db.collection('leaderboards').doc(gameId).collection('scores')
+                                                .orderBy('score', 'desc')
+                                                .limit(limit)
+                                                .get();
+
+                if (querySnapshot.empty) {
+                    targetListElement.innerHTML = `<li>No scores yet for ${gameIds[gameId]}. Be the first!</li>`;
+                    return;
+                }
+
+                targetListElement.innerHTML = '';
+                let rank = 1;
+                querySnapshot.forEach(doc => {
+                    const data = doc.data();
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span>${rank}. ${data.username}</span> <span>${data.score}</span>`;
+                    targetListElement.appendChild(li);
+                    rank++;
+                });
+            } catch (error) {
+                console.error(`Error fetching global leaderboard for ${gameId}:`, error);
+                targetListElement.innerHTML = `<li>Error loading global leaderboard for ${gameIds[gameId]}.</li>`;
+            }
+        }
+
+        // Function to fetch and display personal bests for all games
+        async function fetchPersonalBests(userId, targetListElement) {
+            targetListElement.innerHTML = '<li>Loading personal bests...</li>';
+
+            if (!userId) {
+                targetListElement.innerHTML = '<li>Sign in to see your personal bests.</li>';
+                return;
+            }
+
+            try {
+                const userPersonalBestsCollectionRef = db.collection('users').doc(userId).collection('personalBests');
+                const querySnapshot = await userPersonalBestsCollectionRef.get();
+
+                if (querySnapshot.empty) {
+                    targetListElement.innerHTML = '<li>No personal bests recorded yet. Play a game!</li>';
+                    return;
+                }
+
+                targetListElement.innerHTML = '';
+                querySnapshot.forEach(doc => {
+                    const data = doc.data();
+                    const gameDisplayName = gameIds[doc.id] || doc.id; // Use display name from gameIds, fallback to ID
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span>${gameDisplayName}</span> <span>${data.score}</span>`;
+                    targetListElement.appendChild(li);
+                });
+            } catch (error) {
+                console.error("Error fetching personal bests:", error);
+                targetListElement.innerHTML = '<li>Error loading personal bests.</li>';
+            }
+        }
+
+        // --- Custom Message Box Function (instead of alert) ---
+        function showMessageBox(message) {
+            const messageBox = document.createElement('div');
+            messageBox.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #4a5568; /* Gray-700 */
+                color: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                z-index: 1000;
+                text-align: center;
+                font-family: 'Inter', sans-serif;
+                max-width: 80%;
+                box-sizing: border-box;
+                font-size: 1.1rem;
+            `;
+            messageBox.textContent = message;
+
+            document.body.appendChild(messageBox);
+
+            setTimeout(() => {
+                messageBox.remove();
+            }, 3000); // Message disappears after 3 seconds
+        }
+
+        // --- Main Leaderboard Tabs Logic ---
+        leaderboardTabsContainer.querySelectorAll('.leaderboard-tab-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('#leaderboardTabs .leaderboard-tab-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                activeLeaderboardGameId = this.dataset.gameId;
+                fetchGlobalLeaderboard(activeLeaderboardGameId, globalLeaderboardList, currentLeaderboardGameNameSpan, 5); // Limit to 5 for main view
+            });
+        });
+        
+        // --- Flappy Bird Game Logic ---
+        const flappyBirdCanvas = document.getElementById('flappyBirdCanvas');
+        const flappyBirdCtx = flappyBirdCanvas.getContext('2d');
+
+        let bird = {
+            x: 50,
+            y: flappyBirdCanvas.height / 2,
+            radius: 15,
+            velocity: 0,
+            gravity: 0.5,
+            jump: -8
+        };
+
+        let pipes = [];
+        let pipeWidth = 50;
+        let pipeGap = 120; // Gap between top and bottom pipe
+        let pipeHorizontalGap = 200; // Horizontal distance between pipe pairs
+        let frameCount = 0;
+        let score = 0;
+        let flappyBirdGameRunning = false;
+        let flappyBirdGameOver = false;
+
+
+        function drawBird() {
+            flappyBirdCtx.fillStyle = '#ffeb3b'; // Yellow bird
+            flappyBirdCtx.beginPath();
+            flappyBirdCtx.arc(bird.x, bird.y, bird.radius, 0, Math.PI * 2);
+            flappyBirdCtx.fill();
+            flappyBirdCtx.strokeStyle = '#fbc02d'; // Darker yellow border
+            flappyBirdCtx.lineWidth = 2;
+            flappyBirdCtx.stroke();
+        }
+
+        function drawPipes() {
+            flappyBirdCtx.fillStyle = '#4caf50'; // Green pipes
+            pipes.forEach(pipe => {
+                flappyBirdCtx.fillRect(pipe.x, 0, pipe.width, pipe.top);
+                flappyBirdCtx.fillRect(pipe.x, pipe.top + pipe.gap, pipe.width, flappyBirdCanvas.height - pipe.top - pipe.gap);
+                flappyBirdCtx.strokeStyle = '#2e7d32'; // Darker green border
+                flappyBirdCtx.lineWidth = 2;
+                flappyBirdCtx.strokeRect(pipe.x, 0, pipe.width, pipe.top);
+                flappyBirdCtx.strokeRect(pipe.x, pipe.top + pipe.gap, pipe.width, flappyBirdCanvas.height - pipe.top - pipe.gap);
+            });
+        }
+
+        function generatePipes() {
+            if (frameCount % pipeHorizontalGap === 0) {
+                let topPipeHeight = Math.random() * (flappyBirdCanvas.height - pipeGap - 100) + 50; // Random height for top pipe
+                pipes.push({
+                    x: flappyBirdCanvas.width,
+                    top: topPipeHeight,
+                    gap: pipeGap,
+                    width: pipeWidth,
+                    passed: false // Flag to check if bird passed this pipe for scoring
+                });
+            }
+        }
+
+        function moveElements() {
+            bird.velocity += bird.gravity;
+            bird.y += bird.velocity;
+
+            pipes.forEach(pipe => {
+                pipe.x -= 2; // Move pipes left
+            });
+
+            // Remove off-screen pipes
+            pipes = pipes.filter(pipe => pipe.x + pipe.width > 0);
+        }
+
+        function checkCollision() {
+            // Check bird hit ground or ceiling
+            if (bird.y + bird.radius > flappyBirdCanvas.height || bird.y - bird.radius < 0) {
+                return true;
+            }
+
+            // Check collision with pipes
+            for (let i = 0; i < pipes.length; i++) {
+                let p = pipes[i];
+
+                // Check if bird is within horizontal range of pipe
+                if (bird.x + bird.radius > p.x && bird.x - bird.radius < p.x + p.width) {
+                    // Check if bird hits top pipe or bottom pipe
+                    if (bird.y - bird.radius < p.top || bird.y + bird.radius > p.top + p.gap) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        function updateScore() {
+            pipes.forEach(pipe => {
+                // If bird has passed the pipe and hasn't been scored yet
+                if (bird.x > pipe.x + pipe.width && !pipe.passed) {
+                    score++;
+                    pipe.passed = true; // Mark as passed to avoid multiple scores
+                }
+            });
+        }
+
+        function drawScore() {
+            flappyBirdCtx.fillStyle = 'white';
+            flappyBirdCtx.font = '24px Inter';
+            flappyBirdCtx.fillText('Score: ' + score, 10, 30);
+        }
+
+        function drawGameOver() {
+            flappyBirdCtx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            flappyBirdCtx.fillRect(0, 0, flappyBirdCanvas.width, flappyBirdCanvas.height);
+            flappyBirdCtx.fillStyle = 'white';
+            flappyBirdCtx.font = '40px Inter';
+            flappyBirdCtx.textAlign = 'center';
+            flappyBirdCtx.fillText('GAME OVER!', flappyBirdCanvas.width / 2, flappyBirdCanvas.height / 2 - 20);
+            flappyBirdCtx.font = '24px Inter';
+            flappyBirdCtx.fillText('Final Score: ' + score, flappyBirdCanvas.width / 2, flappyBirdCanvas.height / 2 + 20);
+            flappyBirdCtx.fillText('Click "Restart Game" to play again.', flappyBirdCanvas.width / 2, flappyBirdCanvas.height / 2 + 60);
+        }
+
+        function flappyBirdGameLoop() {
+            if (!flappyBirdGameRunning) {
+                return; // Stop the loop if game is not running
+            }
+
+            flappyBirdCtx.clearRect(0, 0, flappyBirdCanvas.width, flappyBirdCanvas.height);
+
+            drawBird();
+            drawPipes();
+            drawScore();
+
+            frameCount++;
+            generatePipes();
+            moveElements();
+            updateScore();
+
+            if (checkCollision()) {
+                endGame('flappyBird'); // Pass the gameId when ending the game
+            } else {
+                requestAnimationFrame(flappyBirdGameLoop);
+            }
+        }
+
+        function startGameFlappyBird() {
+            // Reset game state for Flappy Bird
+            bird.y = flappyBirdCanvas.height / 2;
+            bird.velocity = 0;
+            pipes = [];
+            score = 0;
+            frameCount = 0;
+            flappyBirdGameOver = false;
+            flappyBirdGameRunning = true;
+            startGameButton.textContent = 'Restart Game'; // Change button text
+
+            // Clear canvas and draw initial state
+            flappyBirdCtx.clearRect(0, 0, flappyBirdCanvas.width, flappyBirdCanvas.height);
+            drawBird();
+            drawScore();
+
+            // Listen for clicks/taps for flapping only when game is running
+            flappyBirdCanvas.removeEventListener('click', flapBird); // Remove previous listener to prevent duplicates
+            flappyBirdCanvas.addEventListener('click', flapBird);
+            // Also listen for spacebar
+            document.removeEventListener('keydown', handleKeyDown);
+            document.addEventListener('keydown', handleKeyDown);
+
+            flappyBirdGameLoop();
+        }
+
+        function flapBird() {
+            if (flappyBirdGameRunning) {
+                bird.velocity = bird.jump;
+            }
+        }
+
+        function handleKeyDown(event) {
+            if (event.code === 'Space' && flappyBirdGameRunning) {
+                flapBird();
+                event.preventDefault(); // Prevent page scrolling
+            }
+        }
+
+        function endGame(gameId, suppressScoreSubmission = false) {
+            flappyBirdGameRunning = false;
+            flappyBirdGameOver = true;
+            drawGameOver();
+            // Remove event listeners to stop player input after game over
+            flappyBirdCanvas.removeEventListener('click', flapBird);
+            document.removeEventListener('keydown', handleKeyDown);
+
+            // Submit score to Firebase unless suppressed (e.g., when returning to game selection)
+            if (!suppressScoreSubmission && score > 0) {
+                 submitScore(gameId, score);
+            } else if (!suppressScoreSubmission && score === 0) {
+                showMessageBox(`Score for ${gameIds[gameId]} was 0. Play again to set a record!`);
+            }
+        }
+
+        // Placeholder function for other games' start buttons
+        function startGamePlaceholder(gameId) {
+            showMessageBox(`Starting ${gameIds[gameId]}! (Game logic not yet implemented)`);
+            // You would replace this with actual game initialization logic later
+            // For now, let's simulate a score submission for testing purposes
+            // const randomScore = Math.floor(Math.random() * 100) + 1;
+            // submitScore(gameId, randomScore);
+        }
+
+        // Initial canvas drawing (welcome screen for Flappy Bird)
+        function drawWelcomeScreen(canvasId) {
+            const canvasToDraw = document.getElementById(canvasId);
+            const ctxToDraw = canvasToDraw.getContext('2d');
+            ctxToDraw.fillStyle = '#334155'; /* Tailwind slate-700 */
+            ctxToDraw.fillRect(0, 0, canvasToDraw.width, canvasToDraw.height);
+            ctxToDraw.fillStyle = 'white';
+            ctxToDraw.font = '30px Inter';
+            ctxToDraw.textAlign = 'center';
+            const gameName = gameIds[canvasId.replace('Canvas', '')] || 'Game';
+            ctxToDraw.fillText(`${gameName}`, canvasToDraw.width / 2, canvasToDraw.height / 2 - 30);
+            ctxToDraw.font = '18px Inter';
+            ctxToDraw.fillText('Click "Start Game" to begin!', canvasToDraw.width / 2, canvasToDraw.height / 2 + 10);
+            if (canvasId === 'flappyBirdCanvas') { // Specific instruction for Flappy Bird
+                ctxToDraw.font = '14px Inter';
+                ctxToDraw.fillText('Click/Tap or Spacebar to flap.', canvasToDraw.width / 2, canvasToDraw.height / 2 + 40);
+            }
+        }
+
+        // Initial calls when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial fetch of leaderboards (they will update based on auth state)
+            fetchGlobalLeaderboard(activeLeaderboardGameId, globalLeaderboardList, currentLeaderboardGameNameSpan, 5); // Fetch only top 5 initially
+            showGameSelection(); // Start by showing game selection
+        });
+
+        // Make canvas responsive
+        // This handles the canvas element's CSS size, not the internal game scaling.
+        window.addEventListener('resize', () => {
+            // Re-render the game content when resized if the game is not running
+            if (!flappyBirdGameRunning && flappyBirdGameOver) {
+                drawGameOver();
+            } else if (!flappyBirdGameRunning && !flappyBirdGameOver && activeGameBeingPlayed === 'flappyBird') {
+                drawWelcomeScreen('flappyBirdCanvas');
+            }
+            // Add similar logic for other games when they are implemented
+        });
+
+    </script>
+</body>
+</html>
