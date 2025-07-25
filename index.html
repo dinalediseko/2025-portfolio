@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D'SEIKOU - Personal Portfolio | Homepage </title>
+  <link rel="icon" href="/media/black-favicon.png" type="image"/>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Bootstrap Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Style Variables for Easy Customization -->
+  <style>
+    /* For the typing cursor */
+    .typed-cursor {
+      color: #be001c;
+      /* Accent Primary */
+      font-weight: bold;
+    }
+
+    /* Animated Hamburger Icon Styles */
+    .hamburger-icon {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 1.75rem;
+      /* 28px */
+      height: 1.75rem;
+      /* 28px */
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 10;
+    }
+
+    .hamburger-icon span {
+      width: 1.75rem;
+      height: 0.2rem;
+      /* 3.2px */
+      background: #efefe9;
+      /* Text Dark */
+      border-radius: 10px;
+      transition: all 0.3s linear;
+      position: relative;
+      transform-origin: 1px;
+    }
+
+    .hamburger-icon.open span:nth-child(1) {
+      transform: rotate(45deg);
+    }
+
+    .hamburger-icon.open span:nth-child(2) {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+
+    .hamburger-icon.open span:nth-child(3) {
+      transform: rotate(-45deg);
+    }
+
+    /* Styles for Skill Bar Animation */
+    .skill-bar>div {
+      width: 0;
+      transition: width 1.5s ease-in-out;
+    }
+
+    /* Styles for Logo Slider Animation */
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    .animate-scroll {
+      animation: scroll 10s linear infinite;
+    }
+
+    .logo-slider:hover .animate-scroll {
+      animation-play-state: paused;
+    }
+  </style>
+</head>
+
+<body class="bg-[#11100f] font-sans text-[#efefe9]">
+
+  <nav class="bg-[#11100f] shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <div class="text-xl font-semibold[#efefe9]">
+          <a href="https://dseikou.co.za">
+            <img src="/media/D'SEIKOU Logo White.png" alt="D'SEIKOU Logo" class="h-8 w-auto">
+          </a>
+        </div>
+
+        <div class="hidden md:flex items-center space-x-6">
+          <a href="#" class="text-[#efefe9] hover:text-[#be001c] hover:font-bold hover:underline">Home</a>
+          <a href="#about" class="text-[#efefe9] hover:text-[#be001c] hover:font-bold hover:underline">About</a>
+          <a href="/multimedia-design/" class="text-[#efefe9] hover:text-[#be001c] hover:font-bold hover:underline">Multimedia
+            Design</a>
+          <a href="/creative-direction/" class="text-[#efefe9] hover:text-[#be001c] hover:font-bold hover:underline">Creative
+            Direction</a>
+          <a href="/fullstack-development/" class="text-[#efefe9] hover:text-[#be001c] hover:font-bold hover:underline">Full-Stack
+            Development</a>
+          <a href="/sidequest/" class="text-[#efefe9] hover:text-[#be001c] hover:font-bold hover:underline">Sidequest</a>
+          <a href="#contact"
+            class="bg-[#efefe9] text-[#11100f] px-4 py-2 rounded-md hover:bg-[#be001c] hover:text-[#efefe9]">Contact</a>
+        </div>
+
+        <div class="md:hidden flex items-center">
+          <button id="menu-button" class="text-[#be001c] focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-4 space-y-2 bg-[#11100f]">
+      <a href="#" class="block text-[#efefe9] text-center hover:bg-[#be001c] hover:text-[#efefe9] p-2 rounded">Home</a>
+      <a href="#about"
+        class="block text-[#efefe9] text-center hover:bg-[#be001c] hover:text-[#efefe9] p-2 rounded">About</a>
+      <a href="/multimedia-design/"
+        class="block text-[#efefe9] text-center hover:bg-[#be001c] hover:text-[#efefe9] p-2 rounded">Multimedia
+        Design</a>
+      <a href="/creative-direction/"
+        class="block text-[#efefe9] text-center hover:bg-[#be001c] hover:text-[#efefe9] p-2 rounded">Creative
+        Direction</a>
+      <a href="/fullstack-development/"
+        class="block text-[#efefe9] text-center hover:bg-[#be001c] hover:text-[#efefe9] p-2 rounded">Full-Stack
+        Development</a>
+      <a href="/sidequest/"
+        class="block text-[#efefe9] text-center hover:bg-[#be001c] hover:text-[#efefe9] p-2 rounded">Side
+        Quest</a>
+      <a href="#contact"
+        class="block bg-[#efefe9] text-[#11100f] text-center px-4 py-2 rounded-md hover:bg-[#be001c] hover:text-[#efefe9]">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-6">
+
+    <!-- Hero Section -->
+    <section id="profile" class="min-h-screen flex items-center justify-center py-16">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-16">
+          <div class="flex-shrink-0">
+            <img src="/media/hero-picture.png" alt="Professional portrait of Didintle Naledi Diseko"
+              class="w-64 h-64 md:w-96 md:h-96 rounded-full object-cover" />
+          </div>
+
+          <div class="text-center md:text-left">
+            <p class="text-lg text-[#be001c]">Hello, I'm</p>
+            <h1 class="text-5xl md:text-6xl font-extrabold mt-2">Didintle Naledi Diseko</h1>
+            <div class="text-3xl font-semibold mt-4 text-[#be001c] h-10">
+              <span class="auto-type"></span>
+            </div>
+
+            <div class="mt-8 flex flex-col sm:flex-row justify-center md:justify-start gap-4">
+              <a href="#contact"
+                class="px-6 py-3 bg-transparent border-2 border-[#efefe9] text-[#efefe9] font-bold rounded-full hover:bg-[#be001c] hover:text-[#efefe9] hover:border-[#be001c] transition-colors duration-300">Contact
+                Info</a>
+              <a href="https://api.whatsapp.com/send?phone=27818994791"
+                class="px-6 py-3 bg-transparent border-2 border-[#efefe9] text-[#efefe9] font-bold rounded-full hover:bg-[#be001c] hover:text-[#efefe9] hover:border-[#be001c] transition-colors duration-300">Chat</a>
+            </div>
+
+            <div class="mt-8 flex flex-col items-center md:items-start gap-y-6">
+              <a href="https://www.buymeacoffee.com/dseikou" target="_blank"
+                class="rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 hover:shadow-[0_0_10px_#FFDD00]">
+                <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee"
+                  style="height: 60px !important; width: 217px !important; display: block;" />
+              </a>
+              <div class="flex justify-center md:justify-start gap-x-6">
+                <a href="https://www.linkedin.com/in/dinalediseko" aria-label="LinkedIn"
+                  class="text-2xl text-[#be001c] hover:text-[#efefe9]"><i class="bi bi-linkedin"></i></a>
+                <a href="https://github.com/dinalediseko" aria-label="GitHub"
+                  class="text-2xl text-[#be001c] hover:text-[#efefe9]"><i class="bi bi-github"></i></a>
+                <a href="https://api.whatsapp.com/send?phone=27818994791" aria-label="WhatsApp"
+                  class="text-2xl text-[#be001c] hover:text-[#efefe9]"><i class="bi bi-whatsapp"></i></a>
+                <a href="https://www.instagram.com/ngwanokestar/" aria-label="Instagram"
+                  class="text-2xl text-[#be001c] hover:text-[#efefe9]"><i class="bi bi-instagram"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16">
+      <p class="text-center text-[#efefe9]">Get To Know More</p>
+      <h2 class="text-center text-[#be001c] text-4xl font-bold mb-12">About Me</h2>
+      <div class="flex flex-col md:flex-row items-center gap-12">
+        <div class="md:w-1/2 flex justify-center">
+          <img src="/media/about-pic.png" alt="About me picture" class="rounded-lg w-full max-w-sm">
+        </div>
+        <div class="md:w-1/2 text-center md:text-left">
+          <p class="text-gray-300 leading-relaxed">
+            You can call me Didi. My professional identity, D'SEIKOU, is a fusion of my surname, Diseko, and the
+            Japanese word for success, 'seikou'. It reflects my core beliefs and who I am at my essence. I spent three
+            years studying towards a diploma in Integrated Communication Design at the Tshwane University of Technology,
+            gaining hands-on experience in a variety of creative disciplines. My time there equipped me with a versatile
+            skill set, spanning Interaction Design, Information Design, Photography, Motion Design, and Marketing,
+            giving me a comprehensive understanding of the creative industry. Driven by a passion for continuous growth,
+            I recently expanded my expertise into the realm of software development, merging my design background with
+            technical skills to create innovative solutions.
+          </p>
+          <div class="mt-8">
+            <a href="/more-about-me/"
+              class="inline-block px-6 py-3 bg-transparent border-2 border-[#efefe9] text-[#efefe9] font-bold rounded-full hover:bg-[#be001c] hover:text-[#efefe9] hover:border-[#be001c] transition-colors duration-300">
+              More About Me
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Logo Slider Section -->
+    <section id="brands" class="py-16">
+      <div
+        class="logo-slider overflow-hidden whitespace-nowrap relative py-4 
+                        before:absolute before:left-0 before:top-0 before:h-full before:w-24 before:bg-gradient-to-r before:from-[#11100f] before:to-transparent before:z-10
+                        after:absolute after:right-0 after:top-0 after:h-full after:w-24 after:bg-gradient-to-l after:from-[#11100f] after:to-transparent after:z-10">
+        <div class="logos-track inline-block animate-scroll">
+          <!-- Add brand logos here (doubled for seamless loop) -->
+          <img src="/media/logo-slider/slider1.png" alt="ASAF" class="h-12 md:h-16 mx-8 inline-block" />
+          <img src="/media/logo-slider/slider3.png" alt="Huawei" class="h-12 md:h-16 mx-8 inline-block" />
+          <img src="/media/logo-slider/slider5.png" alt="YCC" class="h-12 md:h-16 mx-8 inline-block" />
+          <img src="/media/logo-slider/slider6.png" alt="The South African State Theatre"
+            class="h-12 md:h-16 mx-8 inline-block" />
+          <img src="/media/logo-slider/slider7.png" alt="Mokone YPD" class="h-12 md:h-16 mx-8 inline-block" />
+          <img src="/media/logo-slider/slider8.png" alt="MStudios" class="h-12 md:h-16 mx-8 inline-block" />
+          <img src="/media/logo-slider/slider10.png" alt="Kustom Kreations" class="h-12 md:h-16 mx-8 inline-block" />
+          <img src="/media/logo-slider/slider11.png" alt="Elysian Empire" class="h-12 md:h-16 mx-8 inline-block" />
+          <!-- Duplicate the set -->
+          <img src="/media/logo-slider/slider1.png" alt="ASAF" class="h-12 md:h-16 mx-8 inline-block" />
+          <img src="/media/logo-slider/slider3.png" alt="Huawei" class="h-12 md:h-16 mx-8 inline-block" />
+          <img src="/media/logo-slider/slider5.png" alt="YCC" class="h-12 md:h-16 mx-8 inline-block" />
+          <img src="/media/logo-slider/slider6.png" alt="The South African State Theatre"
+            class="h-12 md:h-16 mx-8 inline-block" />
+          <img src="/media/logo-slider/slider7.png" alt="Mokone YPD" class="h-12 md:h-16 mx-8 inline-block" />
+          <img src="/media/logo-slider/slider8.png" alt="MStudios" class="h-12 md:h-16 mx-8 inline-block" />
+          <img src="/media/logo-slider/slider10.png" alt="Kustom Kreations" class="h-12 md:h-16 mx-8 inline-block" />
+          <img src="/media/logo-slider/slider11.png" alt="Elysian Empire" class="h-12 md:h-16 mx-8 inline-block" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="experience" class="py-16">
+      <p class="text-center text-[#efefe9]">Explore My</p>
+      <h2 class="text-center text-[#be001c] text-4xl font-bold mb-12">Skills</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <!-- Soft Skills -->
+        <div class="bg-[#efefe9] text-[#11100f] p-8 rounded-lg">
+          <h3 class="text-2xl font-bold mb-6 text-center">Soft Skills</h3>
+          <div class="space-y-6">
+            <div class="skill-box">
+              <div class="flex justify-between mb-1"><span class="font-semibold">Communication</span><span
+                  class="text-sm font-semibold">90%</span></div>
+              <div class="w-full bg-gray-300 rounded-full h-4 skill-bar">
+                <div class="bg-[#be001c] h-4 rounded-full" data-width="90%"></div>
+              </div>
+            </div>
+            <div class="skill-box">
+              <div class="flex justify-between mb-1"><span class="font-semibold">Problem-Solving</span><span
+                  class="text-sm font-semibold">90%</span></div>
+              <div class="w-full bg-gray-300 rounded-full h-4 skill-bar">
+                <div class="bg-[#be001c] h-4 rounded-full" data-width="90%"></div>
+              </div>
+            </div>
+            <div class="skill-box">
+              <div class="flex justify-between mb-1"><span class="font-semibold">Collaboration</span><span
+                  class="text-sm font-semibold">80%</span></div>
+              <div class="w-full bg-gray-300 rounded-full h-4 skill-bar">
+                <div class="bg-[#be001c] h-4 rounded-full" data-width="80%"></div>
+              </div>
+            </div>
+            <div class="skill-box">
+              <div class="flex justify-between mb-1"><span class="font-semibold">Adaptability</span><span
+                  class="text-sm font-semibold">95%</span></div>
+              <div class="w-full bg-gray-300 rounded-full h-4 skill-bar">
+                <div class="bg-[#be001c] h-4 rounded-full" data-width="95%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Technical Skills -->
+        <div class="bg-[#efefe9] text-[#11100f] p-8 rounded-lg">
+          <h3 class="text-2xl font-bold mb-6 text-center">Technical Skills</h3>
+          <div class="space-y-6">
+            <div class="skill-box">
+              <div class="flex justify-between mb-1"><span class="font-semibold">Design Software Proficiency</span><span
+                  class="text-sm font-semibold">95%</span></div>
+              <div class="w-full bg-gray-300 rounded-full h-4 skill-bar">
+                <div class="bg-[#be001c] h-4 rounded-full" data-width="95%"></div>
+              </div>
+            </div>
+            <div class="skill-box">
+              <div class="flex justify-between mb-1"><span class="font-semibold">UX/UI Design</span><span
+                  class="text-sm font-semibold">80%</span></div>
+              <div class="w-full bg-gray-300 rounded-full h-4 skill-bar">
+                <div class="bg-[#be001c] h-4 rounded-full" data-width="80%"></div>
+              </div>
+            </div>
+            <div class="skill-box">
+              <div class="flex justify-between mb-1"><span class="font-semibold">Coding Skills</span><span
+                  class="text-sm font-semibold">70%</span></div>
+              <div class="w-full bg-gray-300 rounded-full h-4 skill-bar">
+                <div class="bg-[#be001c] h-4 rounded-full" data-width="70%"></div>
+              </div>
+            </div>
+            <div class="skill-box">
+              <div class="flex justify-between mb-1"><span class="font-semibold">Project Management</span><span
+                  class="text-sm font-semibold">90%</span></div>
+              <div class="w-full bg-gray-300 rounded-full h-4 skill-bar">
+                <div class="bg-[#be001c] h-4 rounded-full" data-width="90%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16">
+      <p class="text-center text-[#efefe9]">The Actual Portfolio</p>
+      <h2 class="text-center text-[#be001c] text-4xl font-bold mb-12">Projects</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Creative Direction Card -->
+        <a href="/creative-direction/"
+          class="group block bg-[#11100f] rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 hover:shadow-[0_0_10px_#be001c]">
+          <img src="/media/cdir-card.png" alt="Creative Director" class="w-full h-400 object-cover">
+          <div class="p-6">
+            <span class="font-bold text-xl text-[#efefe9]">Creative Direction</span>
+            <p class="mt-2 text-gray-300 text-sm">Turning ambitious concepts into reality, because who doesn’t love a
+              little creative chaos?</p>
+            <div class="mt-4 text-[#be001c] font-semibold flex items-center gap-2"> View Work <i
+                class="bi bi-arrow-right-circle transition-transform duration-300 group-hover:translate-x-1"></i></div>
+          </div>
+        </a>
+        <!-- Multimedia Design Card -->
+        <a href="/multimedia-design/"
+          class="group block bg-[#11100f] rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 hover:shadow-[0_0_10px_#be001c]">
+          <img src="/media/design-card.png" alt="Multimedia Designer" class="w-full h-400 object-cover">
+          <div class="p-6">
+            <span class="font-bold text-xl text-white">Designer</span>
+            <p class="mt-2 text-gray-300 text-sm">Turning the ordinary into the extraordinary, one pixel at a time.</p>
+            <div class="mt-4 text-[#be001c] font-semibold flex items-center gap-2">View Work <i
+                class="bi bi-arrow-right-circle transition-transform duration-300 group-hover:translate-x-1"></i></div>
+          </div>
+        </a>
+        <!-- Full-Stack Development Card -->
+        <a href="/fullstack-development/"
+          class="group block bg-[#11100f] rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 hover:shadow-[0_0_10px_#be001c]">
+          <img src="/media/dev-card.png" alt="Full-Stack Developer" class="w-full h-400 object-cover">
+          <div class="p-6">
+            <span class="font-bold text-xl text-white">Developer</span>
+            <p class="mt-2 text-gray-300 text-sm">Transforming caffeine into functional code and minor miracles.</p>
+            <div class="mt-4 text-[#be001c] font-semibold flex items-center gap-2">View Work <i
+                class="bi bi-arrow-right-circle transition-transform duration-300 group-hover:translate-x-1"></i></div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Concepts Section 
+    <section id="concepts" class="py-16">
+      <p class="text-center text-[#efefe9]">The Art of What Could Be</p>
+      <h2 class="text-center text-[#be001c] text-4xl font-bold mb-12">Concepts</h2>
+      -->
+    <!-- Filter Buttons 
+      <div id="concept-filters" class="flex justify-center flex-wrap gap-2 md:gap-4 mb-12">
+        <button data-filter="*"
+          class="is-checked px-5 py-2 text-sm font-semibold bg-[#be001c] border-2 border-[#be001c] text-[#efefe9] rounded-full hover:bg-[#be001c] hover:border-2 hover:border-[#be001c]">All</button>
+        <button data-filter=".design"
+          class="px-5 py-2 text-sm font-semibold bg-transparent border-2 border-[#be001c] text-[#efefe9] rounded-full hover:bg-[#be001c] hover:border-2 hover:border-[#be001c]">Multimedia
+          Design</button>
+        <button data-filter=".development"
+          class="px-5 py-2 text-sm font-semibold bg-transparent border-2 border-[#be001c] text-[#efefe9] rounded-full hover:bg-[#be001c] hover:border-2 hover:border-[#be001c]">Full-Stack
+          Dev</button>
+        <button data-filter=".direction"
+          class="px-5 py-2 text-sm font-semibold bg-transparent border-2 border-[#be001c] text-[#efefe9] rounded-full hover:bg-[#be001c] hover:border-2 hover:border-[#be001c]">Creative
+          Direction</button>
+      </div>
+      -->
+    <!-- Concept Grid 
+      <div class="concept-grid -mx-3">
+        <div class="grid-sizer w-full sm:w-1/2 lg:w-1/3"></div>
+        -->
+    <!-- Concept Card 1: Design 
+        <div class="concept-item-container design w-full sm:w-1/2 lg:w-1/3 p-3">
+          <div
+            class="group concept-card relative aspect-[4/3] rounded-lg overflow-hidden shadow-lg border border-gray-700">
+            <img src="https://placehold.co/600x450/3d5a80/ffffff?text=Design+1"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+            <div
+              class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-500 flex flex-col justify-center items-center p-6 text-center text-white opacity-0 group-hover:opacity-100">
+              <h4 class="text-xl font-bold">Packaging Design</h4>
+              <p class="mt-2 text-sm">Coke redesign concept focusing on minimalist aesthetics.</p>
+              <div class="mt-4 flex space-x-2">
+                <button title="Read More"
+                  class="modal-trigger bg-[#efefe9] text-[#11100f] px-4 py-2 rounded-md text-sm font-semibold hover:shadow-[0_0_5px_#efefe9]"
+                  data-title="Packaging Design"
+                  data-description="This is a conceptual redesign of Coca-Cola's packaging, aiming for a cleaner and more modern look. The design emphasizes minimalism and uses a refined color palette to appeal to a contemporary audience.">
+                  Read More
+                </button>
+                <a href="#" title="More Details"
+                  class="inline-flex items-center bg-[#be001c] text-white px-4 py-2 rounded-md text-sm font-semibold hover:shadow-[0_0_15px_#be001c]">View
+                  Page</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        -->
+    <!-- Concept Card 2: Development 
+        <div class="concept-item-container development w-full sm:w-1/2 lg:w-1/3 p-3">
+          <div
+            class="group concept-card relative aspect-[4/3] rounded-lg overflow-hidden shadow-lg border border-gray-700">
+            <img src="https://placehold.co/600x450/293241/ffffff?text=Dev+1"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+            <div
+              class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-500 flex flex-col justify-center items-center p-6 text-center text-white opacity-0 group-hover:opacity-100">
+              <h4 class="text-xl font-bold">Brand Strategy API</h4>
+              <p class="mt-2 text-sm">A developmental concept for a brand management tool.</p>
+              <div class="mt-4 flex space-x-2">
+                <button title="Read More"
+                  class="modal-trigger bg-[#efefe9] text-[#11100f] px-4 py-2 rounded-md text-sm font-semibold hover:shadow-[0_0_5px_#efefe9]"
+                  data-title="Brand Strategy API"
+                  data-description="This is a backend development concept for an API that allows businesses to manage their brand assets, guidelines, and messaging programmatically. It's designed to ensure consistency across all digital platforms.">
+                  Read More
+                </button>
+                <a href="#" title="More Details"
+                  class="inline-flex items-center bg-[#be001c] text-white px-4 py-2 rounded-md text-sm font-semibold hover:shadow-[0_0_15px_#be001c]">View
+                  Page</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        -->
+    <!-- Concept Card 3: Direction 
+        <div class="concept-item-container direction w-full sm:w-1/2 lg:w-1/3 p-3">
+          <div
+            class="group concept-card relative aspect-[4/3] rounded-lg overflow-hidden shadow-lg border border-gray-700">
+            <img src="https://placehold.co/600x450/ee6c4d/ffffff?text=Direction+1"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+            <div
+              class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-500 flex flex-col justify-center items-center p-6 text-center text-white opacity-0 group-hover:opacity-100">
+              <h4 class="text-xl font-bold">Visual Campaign</h4>
+              <p class="mt-2 text-sm">Art direction for a conceptual awareness campaign.</p>
+              <div class="mt-4 flex space-x-2">
+                <button title="Read More"
+                  class="modal-trigger bg-[#efefe9] text-[#11100f] px-4 py-2 rounded-md text-sm font-semibold hover:shadow-[0_0_5px_#efefe9]"
+                  data-title="Visual Campaign"
+                  data-description="This concept outlines the art direction for a public awareness campaign about mental health. The visual strategy uses a combination of powerful imagery and typography to convey a message of hope and support.">
+                  Read More
+                </button>
+                <a href="#" title="More Details"
+                  class="inline-flex items-center bg-[#be001c] text-white px-4 py-2 rounded-md text-sm font-semibold hover:shadow-[0_0_15px_#be001c]">View
+                  Page</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    -->
+
+  </main>
+
+  <!-- Modal -->
+  <div id="project-modal"
+    class="fixed inset-0 z-[110] flex items-center justify-center p-4 transition-all duration-300 ease-in-out opacity-0 pointer-events-none">
+    <div id="modal-backdrop" class="absolute inset-0 bg-black bg-opacity-60"></div>
+    <div id="modal-content"
+      class="bg-white rounded-lg shadow-2xl max-w-2xl w-full p-8 relative transform transition-all duration-300 ease-in-out scale-95">
+      <button id="modal-close-btn" class="absolute top-4 right-4 text-gray-500 hover:text-[#11100f] z-10">
+        <i class="bi bi-x-lg text-2xl"></i>
+      </button>
+      <h3 id="modal-title" class="text-3xl font-bold mb-4 text-[#11100f]"></h3>
+      <div id="modal-description" class="text-gray-700 leading-relaxed max-h-[60vh] overflow-y-auto pr-4 space-y-4">
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer id="contact" class="bg-[#efefe9] text-[#11100f] pt-10 pb-8">
+    <div class="container mx-auto px-6">
+      <div class="flex justify-center mb-8">
+        <a href="https://www.buymeacoffee.com/dseikou" target="_blank"><img
+            src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee"
+            style="height: 60px !important;width: 217px !important;"></a>
+      </div>
+      <div class="flex flex-wrap justify-center items-center text-center gap-y-4 md:gap-x-8">
+        <div class="flex items-center gap-x-3">
+          <i class="bi bi-envelope text-xl text-[#be001c]"></i>
+          <a href="mailto:dinalediseko@dseikou.co.za"
+            class="text-medium hover:text-[#be001c]">dinalediseko@dseikou.co.za</a>
+        </div>
+        <div class="flex items-center gap-x-3">
+          <i class="bi bi-telephone text-xl text-[#be001c]"></i>
+          <a href="tel:+27818994791" class="text-medium hover:text-[#be001c]">(+27) 81 899 4791</a>
+        </div>
+      </div>
+      <div class="flex justify-center mt-8 gap-x-6">
+        <a href="https://www.linkedin.com/in/dinalediseko" aria-label="LinkedIn"
+          class="text-2xl text-[#be001c] hover:text-[#11100f]"><i class="bi bi-linkedin"></i></a>
+        <a href="https://github.com/dinalediseko" aria-label="GitHub"
+          class="text-2xl text-[#be001c] hover:text-[#11100f]"><i class="bi bi-github"></i></a>
+        <a href="https://api.whatsapp.com/send?phone=27818994791" aria-label="WhatsApp"
+          class="text-2xl text-[#be001c] hover:text-[#11100f]"><i class="bi bi-whatsapp"></i></a>
+        <a href="https://www.instagram.com/ngwanokestar" aria-label="Instagram"
+          class="text-2xl text-[#be001c] hover:text-[#11100f]"><i class="bi bi-instagram"></i></a>
+      </div>
+      <div class="text-center text-[#be001c] mt-8 border-t border-[#11100f] pt-6">
+        <span class="text-[#11100f]">Copyright © 2025 <a href="https://dseikou.co.za" class="text-[#be001c] hover:underline">
+            D'SEIKOU</a>. All rights
+          reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // --- Mobile Menu Script ---
+      const menuButton = document.getElementById('menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      menuButton.addEventListener('click', () => {
+        menuButton.classList.toggle('open');
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      // --- Typed.js Script ---
+      var typed = new Typed(".auto-type", {
+        strings: ["Designer", "Creative Director", "Developer"],
+        typeSpeed: 150,
+        backSpeed: 150,
+        loop: true
+      });
+
+      // --- Smooth Scroll for Nav Links & Close Mobile Menu ---
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          const href = this.getAttribute('href');
+          if (href && href !== '#') {
+            e.preventDefault();
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+              mobileMenu.classList.add('hidden');
+              menuButton.classList.remove('open');
+            }
+            const targetElement = document.querySelector(href);
+            if (targetElement) {
+              targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        });
+      });
+
+      // --- Animate Skills on Scroll ---
+      const skillsSection = document.querySelector('#experience');
+      const skillBars = document.querySelectorAll('.skill-bar > div');
+      const animateSkills = (entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            skillBars.forEach(bar => {
+              bar.style.width = bar.getAttribute('data-width');
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      };
+      const skillsObserver = new IntersectionObserver(animateSkills, { threshold: 0.3 });
+      skillsObserver.observe(skillsSection);
+
+      // --- Concept Section Filter (Isotope) ---
+      var conceptGrid = document.querySelector('.concept-grid');
+      if (conceptGrid) {
+        var iso = new Isotope(conceptGrid, {
+          itemSelector: '.concept-item-container',
+          layoutMode: 'masonry',
+          percentPosition: true,
+          masonry: {
+            columnWidth: '.grid-sizer'
+          }
+        });
+        var filterButtons = document.querySelectorAll('#concept-filters button');
+        filterButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            var filterValue = button.getAttribute('data-filter');
+            iso.arrange({ filter: filterValue });
+            filterButtons.forEach(btn => {
+              btn.classList.remove('is-checked', 'bg-[#be001c]', 'text-[white]');
+              btn.classList.add('bg-transperant', 'text-[#efefe9]');
+            });
+            button.classList.add('is-checked', 'bg-[#be001c]', 'text-white');
+            button.classList.remove('bg-gray-700', 'text-[#efefe9]');
+          });
+        });
+      }
+
+      // --- Modal Script ---
+      const modal = document.getElementById('project-modal');
+      const modalContent = document.getElementById('modal-content');
+      const modalTitle = document.getElementById('modal-title');
+      const modalDescription = document.getElementById('modal-description');
+      const closeModalBtn = document.getElementById('modal-close-btn');
+      const modalBackdrop = document.getElementById('modal-backdrop');
+
+      function openModal(title, description) {
+        modalTitle.textContent = title;
+        modalDescription.innerHTML = description.split('\n').map(p => `<p>${p}</p>`).join('');
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        modalContent.classList.remove('scale-95');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        modal.classList.add('opacity-0');
+        modalContent.classList.add('scale-95');
+        setTimeout(() => {
+          modal.classList.add('pointer-events-none');
+          document.body.style.overflow = 'auto';
+        }, 300);
+      }
+
+      document.body.addEventListener('click', function (event) {
+        if (event.target.matches('.modal-trigger')) {
+          const title = event.target.getAttribute('data-title');
+          const description = event.target.getAttribute('data-description');
+          openModal(title, description);
+        }
+      });
+
+      closeModalBtn.addEventListener('click', closeModal);
+      modalBackdrop.addEventListener('click', closeModal);
+
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && !modal.classList.contains('pointer-events-none')) {
+          closeModal();
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
