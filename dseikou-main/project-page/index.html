@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Detail Page (Bootstrap Icons)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body class="bg-[#efefe9] font-sans text-[#11100f]">
+
+    <nav class="bg-[#efefe9] shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-xl font-semibold[#11100f]">
+                    <a href="#">Project Category</a>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#" class="text-[#11100f] font-semibold hover:text-[#be001c]">Home</a>
+                    <a href="#" class="text-[#11100f] font-semibold hover:text-[#be001c]">About</a>
+                    <a href="#" class="text-[#11100f] font-semibold hover:text-[#be001c]">Design</a>
+                    <a href="#" class="text-[#11100f] font-semibold hover:text-[#be001c]">Development</a>
+                    <a href="#" class="text-[#11100f] font-semibold hover:text-[#be001c]">Side Quest</a>
+                    <a href="#contact" class="bg-[#11100f] text-[#efefe9] font-semibold px-4 py-2 rounded-md hover:bg-[#be001c]">Contact</a>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button id="menu-button" class="text-[#be001c] focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-4 space-y-2 bg-[#efefe9]">
+            <a href="#" class="block text-[#11100f] text-center font-semibold hover:bg-[#be001c] hover:text-[#efefe9] p-2 rounded">Home</a>
+            <a href="#" class="block text-[#11100f] text-center font-semibold hover:bg-[#be001c] hover:text-[#efefe9] p-2 rounded">About</a>
+            <a href="#" class="block text-[#11100f] text-center font-semibold hover:bg-[#be001c] hover:text-[#efefe9] p-2 rounded">Design</a>
+            <a href="#" class="block text-[#11100f] text-center font-semibold hover:bg-[#be001c] hover:text-[#efefe9] p-2 rounded">Development</a>
+            <a href="#" class="block text-[#11100f] text-center font-semibold hover:bg-[#be001c] hover:text-[#efefe9] p-2 rounded">Side Quest</a>
+            <a href="#contact" class="block bg-[#11100f] text-[#efefe9] text-center font-semibold px-4 py-2 rounded-md hover:bg-[#be001c]">Contact</a>
+        </div>
+    </nav>
+
+    <!-- NEW: Breadcrumb Navigation -->
+    <div class="bg-[#efefe9] py-4 border-b border-[#efefe9]">
+        <div class="container mx-auto px-6">
+            <nav aria-label="Breadcrumb">
+                <ol class="flex items-center space-x-2 text-sm">
+                    <li>
+                        <a href="index.html" class="text-[#11100f] font-medium  hover:text-[#be001c]">
+                            <i class="bi bi-arrow-left-circle"></i> Home
+                        </a>
+                    </li>
+                    <li>
+                        <span class="text-[#be001c]">/</span>
+                    </li>
+                    <li aria-current="page" class="font-medium text-[#11100f] hover:text-[#be001c]">
+                        Portfolio Details
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-6 py-8">
+        <div class="bg-[#efefe9] p-8 rounded-lg shadow-lg">
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 md:gap-12">
+
+                <section class="md:col-span-3 mb-8">
+                    <div class="slideshow-container relative">
+                        <div class="mySlides fade"><img src="https://via.placeholder.com/1200x600.png?text=Project+Visual+1" class="w-full rounded-lg"></div>
+                        <div class="mySlides fade hidden"><img src="https://via.placeholder.com/1200x600.png?text=Project+Visual+2" class="w-full rounded-lg"></div>
+                        <div class="mySlides fade hidden"><img src="https://via.placeholder.com/1200x600.png?text=Project+Visual+3" class="w-full rounded-lg"></div>
+
+                        <a class="prev absolute top-1/2 left-0 transform -translate-y-1/2 p-4 text-[#efefe9] font-bold text-2xl bg-[#000000]/[0.4] hover:bg-[#000000]/[0.7] transition-colors duration-300 cursor-pointer rounded-r-lg" onclick="plusSlides(-1)">&#10094;</a>
+                        <a class="next absolute top-1/2 right-0 transform -translate-y-1/2 p-4 text-[#efefe9] font-bold text-2xl bg-[#000000]/[0.4] hover:bg-[#000000]/[0.7] transition-colors duration-300 cursor-pointer rounded-l-lg" onclick="plusSlides(1)">&#10095;</a>
+                    </div>
+                </section>
+
+                <section class="md:col-span-2">
+                    <div class="project-header mb-6">
+                        <h1 class="text-4xl text-[#be001c] font-bold mb-2">Project Title</h1>
+                        <p class="text-xl text-[#11100f]">A brief, engaging subtitle for your project.</p>
+                    </div>
+
+                    <div class="project-body space-y-4 text-[#11100f] leading-relaxed">
+                        <h2 class="text-2xl font-semibold">About the Project</h2>
+                        <p>This is where you'll write a detailed description of your project. Talk about the goals, your process, the challenges you faced, and the solutions you came up with. This is your opportunity to really sell your skills and expertise.</p>
+                        <p>For a development project, you could discuss the tech stack. For a multimedia piece, describe the software you used. For creative direction, explain your conceptual process.</p>
+
+                        <div class="client-comment mt-8 bg-[#11100f] p-6 border-l-4 border-[#be001c]">
+                            <blockquote class="italic text-[#efefe9]">
+                                "This is an amazing testimonial from a happy client. It adds a great deal of credibility to your work."
+                            </blockquote>
+                            <cite class="block text-right text-[#be001c] mt-2 font-semibold">- Happy Client</cite>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="mt-8 md:mt-0">
+                    <div class="bg-[#efefe9] p-6 rounded-lg border border-[#be001c]">
+                        <h3 class="text-xl font-bold mb-4">Project Information</h3>
+                        <ul class="space-y-3 text-[#11100f]">
+                            <li><strong>Category:</strong> <span id="project-category">Web Design</span></li>
+                            <li><strong>Client:</strong> <span id="project-client">ASU Company</span></li>
+                            <li><strong>Project Date:</strong> <span id="project-date">24 June, 2025</span></li>
+                            <li><strong>Project URL:</strong> <a href="http://www.example.com" id="project-url" target="_blank" class="text-[#be001c] hover:underline">Visit Website</a></li>
+                        </ul>
+                    </div>
+                </aside>
+
+            </div>
+        </div>
+    </main>
+
+<footer id="contact" class="bg-[#11100f] text-[#efefe9] pt-10 pb-8">
+        <div class="container mx-auto px-6">
+
+            <div class="flex flex-wrap justify-center items-center text-center gap-y-4 md:gap-x-8">
+                <div class="flex items-center gap-x-3">
+                    <i class="bi bi-envelope text-xl text-[#be001c]"></i>
+                    <a href="mailto:your.email@example.com" class="hover:text-[#be001c]">your.email@example.com</a>
+                </div>
+                <div class="flex items-center gap-x-3">
+                     <i class="bi bi-telephone text-xl text-[#be001c]"></i>
+                     <span class="text-[#efefe9]">(+27) 12 345 6789</span>
+                </div>
+            </div>
+
+            <div class="flex justify-center mt-8 gap-x-6">
+                <a href="#" aria-label="LinkedIn" class="text-2xl text-[#efefe9] hover:text-[#be001c]">
+                    <i class="bi bi-linkedin"></i>
+                </a>
+                <a href="#" aria-label="GitHub" class="text-2xl text-[#efefe9] hover:text-[#be001c]">
+                    <i class="bi bi-github"></i>
+                </a>
+                <a href="#" aria-label="WhatsApp" class="text-2xl text-[#efefe9] hover:text-[#be001c]">
+                    <i class="bi bi-whatsapp"></i>
+                </a>
+                <a href="#" aria-label="Instagram" class="text-2xl text-[#efefe9] hover:text-[#be001c]">
+                    <i class="bi bi-instagram"></i>
+                </a>
+            </div>
+
+            <div class="text-center text-[#efefe9] mt-8 border-t border-[#be001c] pt-6">
+                <p>&copy; 2025 Your Name. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script-copy.js"></script>
+</body>
+</html>
